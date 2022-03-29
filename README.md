@@ -1,2 +1,2 @@
-# React-JS-Spring-Boot-Full-Stack
-Employee management System using React Js and Spring Boot
+# Full Stack (ReactJs + Spring Boot)
+Stark Employee System using React Js and Spring Boot Microservices
