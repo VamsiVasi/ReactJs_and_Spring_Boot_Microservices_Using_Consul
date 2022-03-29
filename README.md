@@ -2,7 +2,13 @@
 
 **_Stark Employee System using React Js and Spring Boot Microservices_**
 
-# _* Backend Using Spring Boot_
+# _Software Requirements_
+* Application Type : [Microservices](https://spring.io/microservices)
+* Build Tool : [Maven](https://spring.io/guides/gs/maven/)
+* Database : [MYSQL](https://dev.mysql.com/downloads/mysql/)
+* IDE : [Eclipse](https://www.eclipse.org/downloads/)
+
+# _Backend Using Spring Boot_
 
 Step 1 : Create two Spring Boot Microservices i.e **_Employee Service_** and **_Training Service_**
 
@@ -30,7 +36,7 @@ Step 6 : Check the Consul Ui whether the services are registered or not.
 Step 7 : Use the Rest Template in Employee Service to communicate with Training Service.
 ( In RestTemplate, we can use the name of the service specified in **_spring.application.name_** for the URL attribute instead of hardcoding the Ip and Port of the Training Service )
 
-# _* Frontend Using ReactJs_
+# _Frontend Using ReactJs_
 
 * Note : Install **_React Code Snippets_** Extention in Visual Studio Code for creating component structure easily using **_rcfc_**
 
