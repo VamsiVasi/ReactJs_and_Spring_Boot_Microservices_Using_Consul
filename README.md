@@ -9,7 +9,10 @@ Step 1 : Create two Spring Boot Microservices i.e **_Employee Service_** and **_
 Step 2 : Add **_Consul Configuration_**, **_Consul Discovery Client_** and **_Spring Cloud Starter Bootstrap_** dependencies in pom.xml of the two services.
 ( i.e; This is used to register the services in Consul Server )
 
-Step 3 : Start the Consul Server using **_consul agent -server -bootstrap-expect=1 -data-dir=C:/Consul/Consul-Data -ui -bind=_**            
+Step 3 : Start the Consul Server using 
+```bash 
+consul agent -server -bootstrap-expect=1 -data-dir=C:/Consul/Consul-Data -ui -bind= 
+```            
 ( Note : After **_bind=_** provide **_ip-address_** and we can get this by using **_ipconfig_** command )
 
 Step 4 : Centralize the common properties of both the services in Consul. ( Requires **_Consul Configuration_** and **_Spring Cloud Starter Bootstrap_** dependencies )
@@ -34,9 +37,15 @@ Step 7 : Use the Rest Template in Employee Service to communicate with Training 
 Step 1 : Create a react app using **_npx create-react-app stark_employee_system_**
 
 Step 2 : Run all these commands in your project to make use of **_routing_**, **_bootstrap predefined classes_** and **_rest api's_**
-* npm install react-router-dom@5.2.0
-* npm i bootstrap@4.6.0
-* npm install axios --save
+```bash 
+npm install react-router-dom@5.2.0
+```
+```bash 
+npm i bootstrap@4.6.0
+```
+```bash 
+npm install axios --save
+```
 
 Step 3 : import below package in **_index.js_**
 * import 'bootstrap/dist/css/bootstrap.min.css';
