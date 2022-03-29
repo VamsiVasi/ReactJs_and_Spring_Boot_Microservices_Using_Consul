@@ -29,7 +29,7 @@ Step 6 : Centralize the common properties of both the services in Consul. ( Requ
 
 * Note : Install **_React Code Snippets_** Extention in Visual Studio Code for creating component structure easily using **_rcfc_**
 
-Step 1 : Create a react app using **_npx create-react-app employee-management-system_**
+Step 1 : Create a react app using **_npx create-react-app stark-employee-system_**
 
 Step 2 : Run all these commands in your project to make use of **_routing_**, **_bootstrap predefined classes_** and **_rest api's_**
 * npm install react-router-dom@5.2.0
