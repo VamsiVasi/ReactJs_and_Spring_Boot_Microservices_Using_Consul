@@ -1,0 +1,15 @@
+#Consul properties
+spring:
+  cloud:
+    consul:
+      discovery:
+        hostname: localhost
+        instance-id: ${spring.application.name}
+      config:
+        fail-fast: false
+        enabled: true
+        prefix: config
+        defaultContext: application
+        data-key: data
+        profileSeparator: '::'
+        format: YAML
