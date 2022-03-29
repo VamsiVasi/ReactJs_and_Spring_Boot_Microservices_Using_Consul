@@ -6,7 +6,7 @@
 * Application Type : [Microservices](https://spring.io/microservices)
 * Build Tool : [Maven](https://spring.io/guides/gs/maven/)
 * Database : [MYSQL](https://dev.mysql.com/downloads/mysql/)
-* IDE : [Eclipse](https://www.eclipse.org/downloads/)
+* IDE : [Eclipse](https://www.eclipse.org/downloads/), [Visual Studio Code](https://code.visualstudio.com/download)
 
 # _Backend Using Spring Boot_
 
