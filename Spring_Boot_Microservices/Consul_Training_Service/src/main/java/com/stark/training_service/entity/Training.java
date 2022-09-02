@@ -53,3 +53,4 @@ public class Training {
 	private String status;
 
 }
+ 
