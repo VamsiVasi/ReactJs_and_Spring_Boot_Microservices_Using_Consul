@@ -1,5 +1,34 @@
 import React, { Component } from 'react';
+import DatePicker from 'react-datepicker';
 import EmployeeService from '../../services/EmployeeService';
+import welcome from '../../assets/thanks13.png';
+import stark from '../../assets/stark.png';
+
+const formValid = ({ formErrors, ...rest }) => {
+    let valid = true;
+
+    // validate form errors being empty
+    Object.values(formErrors).forEach(val => {
+        val.length > 0 && (valid = false);
+    });
+
+    // validate the form was filled out
+    Object.values(rest).forEach(val => {
+        val === null && (valid = false);
+    });
+
+    return valid;
+};
+const convert = (str) => {
+    var date = new Date(str),
+        mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+        day = ("0" + date.getDate()).slice(-2);
+    return [date.getFullYear(), mnth, day].join("-");
+}
+
+const stringContainsNumber = (checkValue) => {
+    return /\d/.test(checkValue);
+}
 
 class CreateOrUpdateEmployeeComponent extends Component {
     constructor(props) {
@@ -10,21 +39,29 @@ class CreateOrUpdateEmployeeComponent extends Component {
             middleName: '',
             lastName: '',
             dateOfBirth: '',
-            address: ''
+            address: '',
+            formErrors: {
+                firstName: "",
+                middleName: "",
+                lastName: "",
+                dateOfBirth: "",
+                address: ""
+            }
         }
-        this.changeFirstNameHandler = this.changeFirstNameHandler.bind(this);
-        this.changeMiddleNameHandler = this.changeMiddleNameHandler.bind(this);
-        this.changeLastNameHandler = this.changeLastNameHandler.bind(this);
+        this.changeHandler = this.changeHandler.bind(this);
         this.changeDOBHandler = this.changeDOBHandler.bind(this);
-        this.changeAddressHandler = this.changeAddressHandler.bind(this);
         this.saveOrUpdateEmployee = this.saveOrUpdateEmployee.bind(this);
         this.viewEmployeeButton = this.viewEmployeeButton.bind(this);
         this.editEmployeeButton = this.editEmployeeButton.bind(this);
         this.cancel = this.cancel.bind(this);
-        this.exitButton=this.exitButton.bind(this);
+        this.exitButton = this.exitButton.bind(this);
         this.deleteEmployeeButton = this.deleteEmployeeButton.bind(this);
-        this.viewTrainingsButton=this.viewTrainingsButton.bind(this);
+        this.viewTrainingsButton = this.viewTrainingsButton.bind(this);
     }
+
+    handleSubmit = e => {
+        e.preventDefault();
+    };
 
     componentDidMount() {
         if (this.state.id === "_add") {
@@ -37,7 +74,7 @@ class CreateOrUpdateEmployeeComponent extends Component {
                     firstName: employee.firstName,
                     middleName: employee.middleName,
                     lastName: employee.lastName,
-                    dateOfBirth: employee.dateOfBirth,
+                    // dateOfBirth: employee.dateOfBirth,
                     address: employee.address
                 });
             });
@@ -50,20 +87,38 @@ class CreateOrUpdateEmployeeComponent extends Component {
             firstName: this.state.firstName,
             middleName: this.state.middleName,
             lastName: this.state.lastName,
-            dateOfBirth: this.state.dateOfBirth,
+            dateOfBirth: convert(this.state.dateOfBirth),
             address: this.state.address
         };
-        console.log('Employee : ' + JSON.stringify(employee));
-        if (this.state.id === "_add") {
-            EmployeeService.createEmployee(employee).then(res => {
-                this.props.history.push("/employees/_all");
-            });
+        let formErrors = { ...this.state.formErrors };
+        console.log(employee)
+        if (employee.firstName === '') {
+            formErrors.firstName = "* First Name is Required";
         }
-        else {
-            EmployeeService.updateEmployee(employee, this.state.id).then((res) => {
-                this.props.history.push(`/view-employee/${this.state.id}`);
-            });
+        if (employee.lastName === '') {
+            formErrors.lastName = "* Last Name is Required";
         }
+        if (employee.dateOfBirth === 'NaN-aN-aN') {
+            formErrors.dateOfBirth = "* Date Of Birth is Required";
+        }
+        if (employee.address === '') {
+            formErrors.address = "* Address is Required";
+        }
+        if (formValid(this.state) && employee.dateOfBirth !== 'NaN-aN-aN') {
+            if (this.state.id === "_add") {
+                EmployeeService.createEmployee(employee).then(res => {
+                    this.props.history.push("/employees/_all");
+                });
+            }
+            else {
+                EmployeeService.updateEmployee(employee, this.state.id).then((res) => {
+                    this.props.history.push(`/view-employee/${this.state.id}`);
+                });
+            }
+        } else {
+            console.log("Enter all Mandatory Details");
+        }
+        this.setState({ formErrors });
     }
 
     viewEmployeeButton(id) {
@@ -93,39 +148,58 @@ class CreateOrUpdateEmployeeComponent extends Component {
         });
     }
 
-    viewTrainingsButton(id){
+    viewTrainingsButton(id) {
         this.props.history.push(`/trainings/${id}/_all`);
     }
 
-    changeFirstNameHandler = (event) => {
-        this.setState({ firstName: event.target.value });
-    }
-
-    changeMiddleNameHandler = (event) => {
-        this.setState({ middleName: event.target.value });
-    }
-
-    changeLastNameHandler = (event) => {
-        this.setState({ lastName: event.target.value });
+    changeHandler = (event) => {
+        event.preventDefault();
+        const { name, value } = event.target;
+        let formErrors = { ...this.state.formErrors };
+        switch (name) {
+            case "firstName":
+                formErrors.firstName =
+                    (value.length < 3 || stringContainsNumber(value)) ? "* Minimum 3 Characaters without Numbers" : "";
+                break;
+            case "middleName":
+                formErrors.middleName =
+                    stringContainsNumber(event.target.value) ? "* Only Characters" : "";
+                break;
+            case "lastName":
+                formErrors.lastName =
+                    (event.target.value.length < 3 || stringContainsNumber(event.target.value)) ? "* Minimum 3 Characaters without Numbers" : "";
+                break;
+            case "address":
+                formErrors.address =
+                    event.target.value.length === 0 ? "* Address is Required" : "";
+                break;
+            default:
+                break;
+        }
+        this.setState({ formErrors, [name]: value });
     }
 
     changeDOBHandler = (event) => {
-        this.setState({ dateOfBirth: event.target.value });
-    }
-
-    changeAddressHandler = (event) => {
-        this.setState({ address: event.target.value });
+        let formErrors = { ...this.state.formErrors };
+        formErrors.dateOfBirth = "";
+        this.setState({ dateOfBirth: event, formErrors });
     }
 
     getTitle() {
         if (this.state.id === "_add") {
-            return <h3 className="text-center" style={{ marginTop: "18px" }}>Add Employee</h3>;
+            return <h3 className="cardTitle">Add Employee</h3>;
         }
         else {
-            return <h3 className="text-center" style={{ marginTop: "18px" }}>Edit Employee</h3>
+            return <h3 className="cardTitle">Edit Employee</h3>;
         }
     }
-
+    getStarkTitle() {
+        if (this.state.id === "_add") {
+            return <h2 className="starkTitle"><img src={stark} className="stark-logo" /> Stark Employee System <img src={stark} className="stark-logo" /></h2>;
+        } else {
+            return
+        }
+    }
     getMenu() {
         if (this.state.id === "_add") {
             return
@@ -133,9 +207,9 @@ class CreateOrUpdateEmployeeComponent extends Component {
         else {
             return (
                 <div>
-                    <h2 className="text-center" style={{ marginTop: "10px" }}>Welcome {this.state.firstName} {this.state.lastName}</h2>
+                    <h2 className="welcomeTitle" ><img src={welcome} className="welcome-logo" /> Welcome {this.state.firstName} {this.state.lastName} <img src={welcome} className="welcome-logo" /></h2>
                     <div className="text-center" style={{ marginTop: "20px" }}>
-                    <button onClick={() => this.viewEmployeeButton(this.state.id)} className="btn btn-info">View Employee</button>
+                        <button onClick={() => this.viewEmployeeButton(this.state.id)} className="btn btn-info">View Employee</button>
                         <button onClick={() => this.editEmployeeButton(this.state.id)} className="btn btn-info" style={{ marginLeft: "50px" }}>Edit Employee</button>
                         <button onClick={() => this.viewTrainingsButton(this.state.id)} className="btn btn-info" style={{ marginLeft: "50px" }}>View Trainings</button>
                         <button onClick={() => this.deleteEmployeeButton(this.state.id)} className="btn btn-danger" style={{ marginLeft: "50px" }}>Delete Employee</button>
@@ -147,50 +221,68 @@ class CreateOrUpdateEmployeeComponent extends Component {
 
     getButton() {
         if (this.state.id === "_add") {
-            return <button className="btn btn-success" onClick={this.saveOrUpdateEmployee}>Save</button>;
+            return <button type='submit' className="btn btn-success" onClick={this.saveOrUpdateEmployee}>Save</button>;
         }
         else {
-            return <button className="btn btn-success" onClick={this.saveOrUpdateEmployee}>Update</button>;
+            return <button type='submit' className="btn btn-success" onClick={this.saveOrUpdateEmployee}>Update</button>;
         }
     }
 
     render() {
+        const { formErrors } = this.state;
         return (
             <div>
+                {
+                    this.getStarkTitle()
+                }
                 {
                     this.getMenu()
                 }
                 <br></br>
-                <div className="card col-md-6 offset-md-3">
+                <div className="card col-md-6 offset-md-3" style={{ backgroundColor: '#323741' }}>
                     {
                         this.getTitle()
                     }
                     <div className="card-body" style={{ marginTop: "-12px" }}>
-                        <form>
+                        <form onSubmit={this.handleSubmit} noValidate>
                             <div className="form-group">
                                 <label>First Name</label>
                                 <input placeholder="First Name" name="firstName" className="form-control"
-                                    value={this.state.firstName} onChange={this.changeFirstNameHandler}></input>
+                                    value={this.state.firstName} noValidate onChange={this.changeHandler}></input>
+                                {formErrors.firstName.length > 0 && (
+                                    <span className='error'>{formErrors.firstName}</span>
+                                )}
                             </div>
                             <div className="form-group">
                                 <label>Middle Name</label>
                                 <input placeholder="Middle Name" name="middleName" className="form-control"
-                                    value={this.state.middleName} onChange={this.changeMiddleNameHandler}></input>
+                                    value={this.state.middleName} noValidate onChange={this.changeHandler}></input>
+                                {formErrors.middleName.length > 0 && (
+                                    <span className='error'>{formErrors.middleName}</span>
+                                )}
                             </div>
                             <div className="form-group">
                                 <label>Last Name</label>
                                 <input placeholder="Last Name" name="lastName" className="form-control"
-                                    value={this.state.lastName} onChange={this.changeLastNameHandler}></input>
+                                    value={this.state.lastName} noValidate onChange={this.changeHandler}></input>
+                                {formErrors.lastName.length > 0 && (
+                                    <span className='error'>{formErrors.lastName}</span>
+                                )}
                             </div>
                             <div className="form-group">
                                 <label>Date Of Birth</label>
-                                <input placeholder="Date Of Birth" name="dateOfBirth" className="form-control"
-                                    value={this.state.dateOfBirth} onChange={this.changeDOBHandler}></input>
+                                <DatePicker placeholderText="Date Of Birth" noValidate className="form-control" selected={this.state.dateOfBirth} onChange={this.changeDOBHandler} dateFormat="yyyy-MM-dd" maxDate={new Date()}></DatePicker>
+                                {formErrors.dateOfBirth.length > 0 && (
+                                    <span className='error'>{formErrors.dateOfBirth}</span>
+                                )}
                             </div>
                             <div className="form-group">
                                 <label>Address</label>
                                 <input placeholder="Address" name="address" className="form-control"
-                                    value={this.state.address} onChange={this.changeAddressHandler}></input>
+                                    value={this.state.address} onChange={this.changeHandler}></input>
+                                {formErrors.address.length > 0 && (
+                                    <span className='error'>{formErrors.address}</span>
+                                )}
                             </div>
                             {
                                 this.getButton()

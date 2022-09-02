@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import EmployeeService from '../../services/EmployeeService';
+import welcome from '../../assets/thanks13.png';
+import welcome1 from '../../assets/pngwing.png'
 
 class ListTrainingsComponent extends Component {
     constructor(props) {
@@ -78,14 +80,14 @@ class ListTrainingsComponent extends Component {
     }
 
     changeSearchHandler = (event) => {
-        this.setState({ search: event.target.value });
+        this.setState({ search: event.target.value })
     }
 
     render() {
         return (
             <div>
                 <div>
-                    <h2 className="text-center" style={{ marginTop: "10px" }}>Welcome {this.state.employee.firstName} {this.state.employee.lastName}</h2>
+                    <h2 className="welcomeTitle"><img src={welcome} className="welcome-logo" /> Welcome {this.state.employee.firstName} {this.state.employee.lastName} <img src={welcome} className="welcome-logo" /></h2>
                     <div className="text-center" style={{ marginTop: "20px" }}>
                         <button onClick={() => this.viewDetails(this.state.id)} className="btn btn-info">View Employee</button>
                         <button onClick={() => this.editDetails(this.state.id)} className="btn btn-info" style={{ marginLeft: "50px" }}>Edit Employee</button>
@@ -95,9 +97,9 @@ class ListTrainingsComponent extends Component {
                     </div>
                 </div>
                 <br></br>
-                <div className="card">
-                    <h3 className="text-center" style={{ marginTop: "18px" }}>Trainings List</h3>
-                    <div className="card-body" style={{ marginTop: "-12px" }}>
+                <div className="card" style={{ backgroundColor: '#ffffff00',marginBottom:'-30px',marginTop:'-17px' }}>
+                    <h3 className="cardTitle1"><img src={welcome1} className="welcome-logo" /> Trainings <img src={welcome1} className="welcome-logo" /></h3>
+                    <div className="card-body" style={{ marginTop: "-76px" }}>
                         <form>
                             <div>
                                 <button className="btn btn-primary" onClick={() => this.saveTraining(this.state.id)}>Add Training</button>

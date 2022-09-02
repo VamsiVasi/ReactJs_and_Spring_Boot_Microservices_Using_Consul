@@ -40,7 +40,7 @@ public class Training {
 
 	@Column(name = "Time_Spent")
 	@NotNull(message = "Please enter your time spent for the course")
-	@Pattern(regexp = "(^24[h|H]$|^(([01]?[0-9]|2[0-3])[h|H]? *)?([0-5][0-9][m|M])?[ ]* ?$) *", message = "Format : 23h 59m or 24h or 59m")
+	@Pattern(regexp = "(^24[h|H]$|^(([01]?[0-9]|2[0-3])[h|H] *)?([0-5][0-9][m|M])?[ ]* ?$) *", message = "Format : 23h 59m or 24h or 59m")
 	private String timeSpent;
 
 	@Column(name = "Date_Of_Completion")

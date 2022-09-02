@@ -17,7 +17,7 @@ class EmployeeService {
     }
 
     getEmployeesByFirstName(firstName) {
-        return axios.get(EMPLOYEE_API_BASE_URL + "/name/" + firstName);
+        return axios.get(EMPLOYEE_API_BASE_URL + "/name/" + firstName)
     }
 
     updateEmployee(employee, employeeId) {
@@ -33,10 +33,10 @@ class EmployeeService {
     }
 
     getTrainingsByEmpIdAndCourseName(employeeId, courseName) {
-        return axios.get(EMPLOYEE_API_BASE_URL + "/course/name/" + employeeId + "/" + courseName);
+        return axios.get(EMPLOYEE_API_BASE_URL + "/course/name/" + employeeId + "/" + courseName)
     }
 
-    getTrainingsByEmpIdAndCourseId(employeeId, courseId) {
+    getTrainingByEmpIdAndCourseId(employeeId, courseId) {
         return axios.get(EMPLOYEE_API_BASE_URL + "/course/" + employeeId + "/" + courseId);
     }
 

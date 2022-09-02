@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import EmployeeService from '../../services/EmployeeService';
+import welcome from '../../assets/thanks13.png';
 
 class ViewEmployeeComponent extends Component {
     constructor(props) {
@@ -59,7 +60,7 @@ class ViewEmployeeComponent extends Component {
         return (
             <div>
                 <div>
-                <h2 className="text-center" style={{ marginTop: "10px" }}>Welcome {this.state.firstName} {this.state.lastName}</h2>
+                <h2 className="welcomeTitle"><img src={welcome} className="welcome-logo" /> Welcome {this.state.firstName} {this.state.lastName} <img src={welcome} className="welcome-logo" /></h2>
                     <div className="text-center" style={{ marginTop: "20px" }}>
                         <button onClick={() => this.viewEmployeeButton(this.state.id)} className="btn btn-info">View Employee</button>
                         <button onClick={() => this.editEmployeeButton(this.state.id)} className="btn btn-info" style={{ marginLeft: "50px" }}>Edit Employee</button>
@@ -69,33 +70,33 @@ class ViewEmployeeComponent extends Component {
                     </div>
                 </div>
                 <br></br>
-                <div className="card col-md-6 offset-md-3">
-                    <h3 className="text-center" style={{ marginTop: "18px" }}>View Employee</h3>
+                <div className="card col-md-6 offset-md-3" style={{ backgroundColor: '#323741' }}>
+                    <h3 className="cardTitle">View Employee</h3>
                     <div className="card-body" style={{ marginTop: "-12px" }}>
                         <form>
                             <div className="form-group">
                                 <label>First Name</label>
-                                <input disabled="true" name="firstName" className="form-control"
+                                <input disabled={true} name="firstName" className="form-control"
                                     value={this.state.firstName}></input>
                             </div>
                             <div className="form-group">
                                 <label>Middle Name</label>
-                                <input disabled="true" name="middleName" className="form-control"
+                                <input disabled={true} name="middleName" className="form-control"
                                     value={this.state.middleName}></input>
                             </div>
                             <div className="form-group">
                                 <label>Last Name</label>
-                                <input disabled="true" name="lastName" className="form-control"
+                                <input disabled={true} name="lastName" className="form-control"
                                     value={this.state.lastName}></input>
                             </div>
                             <div className="form-group">
                                 <label>Date Of Birth</label>
-                                <input disabled="true" name="dateOfBirth" className="form-control"
+                                <input disabled={true} name="dateOfBirth" className="form-control"
                                     value={this.state.dateOfBirth}></input>
                             </div>
                             <div className="form-group">
                                 <label>Address</label>
-                                <input disabled="true" name="address" className="form-control"
+                                <input disabled={true} name="address" className="form-control"
                                     value={this.state.address}></input>
                             </div>
                             <button onClick={() => this.editEmployeeButton(this.state.id)} className="btn btn-info">Edit</button>

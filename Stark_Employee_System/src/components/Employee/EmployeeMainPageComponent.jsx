@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import EmployeeService from '../../services/EmployeeService';
+import welcome from '../../assets/thanks13.png';
 
 class EmployeeMainPageComponent extends Component {
     constructor(props) {
@@ -54,7 +55,7 @@ class EmployeeMainPageComponent extends Component {
         return (
             <div>
                 <div>
-                <h2 className="text-center" style={{ marginTop: "10px" }}>Welcome {this.state.firstName} {this.state.lastName}</h2>
+                <h2 className="welcomeTitle"><img src={welcome} className="welcome-logo" /> Welcome {this.state.firstName} {this.state.lastName} <img src={welcome} className="welcome-logo" /></h2>
                     <div className="text-center" style={{ marginTop: "20px" }}>
                     <button onClick={() => this.viewEmployeeButton(this.state.id)} className="btn btn-info">View Employee</button>
                         <button onClick={() => this.editEmployeeButton(this.state.id)} className="btn btn-info" style={{ marginLeft: "50px" }}>Edit Employee</button>

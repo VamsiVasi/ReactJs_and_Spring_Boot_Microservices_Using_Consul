@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import EmployeeService from '../../services/EmployeeService';
-
+import EmployeeService from '../../services/EmployeeService'
+import welcome from '../../assets/pngwing.png';
+import stark from '../../assets/stark.png';
 
 class ListEmployeeComponent extends Component {
     constructor(props) {
@@ -52,19 +53,20 @@ class ListEmployeeComponent extends Component {
     }
 
     changeSearchHandler = (event) => {
-        this.setState({ search: event.target.value });
+        this.setState({ search: event.target.value })
     }
 
     render() {
         return (
             <div>
-                <div className="text-center">
-                    <h2 style={{ marginTop: "8px" }}>Employee List</h2>
+                <h2 className="starkTitle"><img src={stark} className="stark-logo" /> Stark Employee System <img src={stark} className="stark-logo" /></h2>
+                <div className="text-center" style={{ backgroundColor: '#323741', borderRadius: '10px',marginTop:'30px' }}>
+                    <h3 className='employeeList'><img src={welcome} className="welcome-logo" /> Employees <img src={welcome} className="welcome-logo" /></h3>
                 </div>
-                <div>
-                    <button className="btn btn-primary" onClick={this.addEmployee}>Add Employee</button>
+                <div style={{ marginTop: '-60px' }}>
+                    <button className="btn btn-primary" style={{ marginLeft: '10px' }} onClick={this.addEmployee}>Add Employee</button>
                     <div className="float-right">
-                        <form className="form-inline">
+                        <form className="form-inline" style={{ marginRight: "10px" }}>
                             <input placeholder="Search" name="search" className="form-control"
                                 value={this.state.search} onChange={this.changeSearchHandler}></input>
                             <button className="btn btn-success" onClick={this.searchEmployee} style={{ marginLeft: "10px" }}>Search</button>

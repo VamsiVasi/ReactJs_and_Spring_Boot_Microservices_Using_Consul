@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 class FooterComponent extends Component {
     constructor(props) {
@@ -9,11 +8,12 @@ class FooterComponent extends Component {
         }
     }
 
+
     render() {
         return (
             <div>
                 <footer className="footer">
-                    <span className="text-muted">All Rights Reserved 2022 @Stark</span>
+                    All Rights Reserved 2022 <a href='https://github.com/VamsiVasi' className='underline'>@VamsiVasi</a>
                 </footer>
             </div>
         );
