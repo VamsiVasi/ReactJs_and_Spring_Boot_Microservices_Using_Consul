@@ -74,7 +74,7 @@ public class EmployeeService {
 				.get();
 	}
 
-	// Get list of employees using employee first name
+	// Get list of employees using employee name
 	public List<Employee> getEmployeesByName(String userName) throws ResourceNotFoundException {
 		List<Employee> emps = new ArrayList<>();
 		List<Employee> empsByFirstName = employeeRepo.findAllByFirstName(userName);
